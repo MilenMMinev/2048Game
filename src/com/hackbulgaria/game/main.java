@@ -7,6 +7,9 @@ public class main {
 		Field f = new Field();
 		f.initialise();
 		f.print();
+		System.out.println();
+		f.moveLeft();
+		f.print();
 		}
 
 	}
