@@ -16,6 +16,9 @@ public class Grid {
 		KeyReader k = new KeyReader();
 		game.initialise();
 		while (true){
+			for(int i = 0; i < 50; i++)
+				System.out.println();
+			game.print();
 			switch (k.getPlayerMove()) {
 			case 2:
 				game.moveLeft();
