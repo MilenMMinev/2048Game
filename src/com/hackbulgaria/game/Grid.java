@@ -10,8 +10,8 @@ public class Grid {
 
 	private void generateRandom() {
 		Random rnd = new Random();
-		int x = rnd.nextInt(4);
-		int y = rnd.nextInt(4);
+		int x = rnd.nextInt(ROWS);
+		int y = rnd.nextInt(COLUMNS);
 		int value;
 		if (rnd.nextInt(2) == 0) {
 			value = 2;
@@ -59,6 +59,19 @@ public class Grid {
 			}
 		}
 	}
+	
+	private Number[][] rotate(Number[][] original) {
+		Number[][] rotated = new Number[ROWS][COLUMNS];
+		final int M = ROWS;
+		final int N = COLUMNS;
+		for (int r = 0; r < M; r++) {
+			for (int c = 0; c < N; c++) {
+				rotated[c][ROWS - 1 - r] = original[r][c];
+			}
+		}
+		return rotated;
+	}
+
 
 	public void moveRight() {
 		for (int i = 0; i < ROWS; i++) {
@@ -73,17 +86,6 @@ public class Grid {
 		}
 	}
 
-	private Number[][] rotate(Number[][] original) {
-		Number[][] rotated = new Number[ROWS][COLUMNS];
-		final int M = ROWS;
-		final int N = COLUMNS;
-		for (int r = 0; r < M; r++) {
-			for (int c = 0; c < N; c++) {
-				rotated[c][ROWS - 1 - r] = original[r][c];
-			}
-		}
-		return rotated;
-	}
 
 	public void moveLeft() {
 		number = rotate(number);
