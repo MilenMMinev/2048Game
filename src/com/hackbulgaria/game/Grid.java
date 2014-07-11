@@ -1,5 +1,7 @@
 package com.hackbulgaria.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Grid {
@@ -8,21 +10,36 @@ public class Grid {
 
 	private Number[][] number = new Number[ROWS][COLUMNS];
 
-	private void generateRandom() {
+	private void addRandom() {
 		Random rnd = new Random();
-		int x = rnd.nextInt(ROWS);
-		int y = rnd.nextInt(COLUMNS);
-		int value;
-		if (rnd.nextInt(2) == 0) {
-			value = 2;
-		} else {
-			value = 4;
+		List<Coordinates> free_squaers = new ArrayList<>();
+		for (int i = 0; i < ROWS; i++)
+			for(int j = 0; j < COLUMNS; j++)
+			if(number[i][j].getValue() == 0)
+				free_squaers.add(new Coordinates(i, j));
+				
+		
+		if (free_squaers.size() == 0)
+			System.out.println("Game Over"); // TO DO:
+			//game over
+		else{
+			int rnd_index = rnd.nextInt(free_squaers.size());  // Select random free square
+			Coordinates rnd_square = free_squaers.get(rnd_index); // Get the coordinates of this square
+			number[rnd_square.getX()][rnd_square.getY()] = getRandom(); // set its value to either 2 or 4
+			
 		}
-		if (number[x][y].getValue() == 0) { // TO DO: Problem if no free space
-			number[x][y].setValue(value);
-		} else {
-			generateRandom();
+	}
+
+	private Number getRandom() {
+		Number random_number = new Number();
+		Random rnd = new Random();
+		if (rnd.nextInt(10) == 1){ // in 10% of the cases
+			random_number.setValue(4);
 		}
+		else{
+			random_number.setValue(2);
+		}
+		return random_number;
 	}
 
 	public void initialise() {
@@ -31,8 +48,8 @@ public class Grid {
 				number[i][j] = new Number();
 			}
 		}
-		generateRandom();
-		generateRandom();
+		addRandom();
+		addRandom();
 	}
 
 	public void print() {

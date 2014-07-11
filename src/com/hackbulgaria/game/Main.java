@@ -8,7 +8,7 @@ public class Main {
 		f.initialise();
 		f.print();
 		System.out.println();
-		f.moveLeft();
+		//f.moveLeft();
 		f.print();
 		}
 
