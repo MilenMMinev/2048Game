@@ -2,7 +2,7 @@ package com.hackbulgaria.game;
 
 import java.util.Random;
 
-public class Field {
+public class Grid {
 	private final int ROWS = 4;
 	private final int COLUMNS = 4;
 

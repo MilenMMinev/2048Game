@@ -1,10 +1,10 @@
 package com.hackbulgaria.game;
 
 
-public class main {
+public class Main {
 
 	public static void main(String[] args) {
-		Field f = new Field();
+		Grid f = new Grid();
 		f.initialise();
 		f.print();
 		System.out.println();
