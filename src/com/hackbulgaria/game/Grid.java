@@ -1,5 +1,6 @@
 package com.hackbulgaria.game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +10,33 @@ public class Grid {
 	private final int COLUMNS = 4;
 
 	private Number[][] number = new Number[ROWS][COLUMNS];
+	
+	public boolean run() throws IOException{
+		Grid game = new Grid();
+		KeyReader k = new KeyReader();
+		game.initialise();
+		while (true){
+			switch (k.getPlayerMove()) {
+			case 2:
+				game.moveLeft();
+				break;
+			case 14:
+				game.moveDown();
+				break;
+			case 6:
+				game.moveRight();
+				break;
+			case 16:
+				game.moveUp();
+				break;
+			case 113:
+				return false;
+			default:
+				break;
+			}
+			game.addRandom();
+		}
+	}
 
 	private void addRandom() {
 		Random rnd = new Random();
@@ -52,7 +80,7 @@ public class Grid {
 		addRandom();
 	}
 
-	public void print() {
+	public void print() { // TO DO: make it usable by Front End
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
 				System.out.print(number[i][j].getValue() + " ");
@@ -129,5 +157,7 @@ public class Grid {
 		number = rotate(number);
 
 	}
+	
+	
 
 }
