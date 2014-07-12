@@ -1,6 +1,5 @@
 package com.hackbulgaria.game;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,39 +8,13 @@ public class Grid {
 	private final int ROWS = 4;
 	private final int COLUMNS = 4;
 
-	private Number[][] number = new Number[ROWS][COLUMNS];
+	private Cell[][] number = new Cell[ROWS][COLUMNS];
 	
-	public boolean run() throws IOException{
-		Grid game = new Grid();
-		KeyReader k = new KeyReader();
-		game.initialise();
-		while (true){
-			for(int i = 0; i < 50; i++)
-				System.out.println();
-			game.print();
-			switch (k.getPlayerMove()) {
-			case 2:
-				game.moveLeft();
-				break;
-			case 14:
-				game.moveDown();
-				break;
-			case 6:
-				game.moveRight();
-				break;
-			case 16:
-				game.moveUp();
-				break;
-			case 113:
-				return false;
-			default:
-				break;
-			}
-			game.addRandom();
-		}
+	public Cell[][] getGridState(){
+		return this.number;
 	}
 
-	private void addRandom() {
+	public void addRandom() {
 		Random rnd = new Random();
 		List<Coordinates> free_squaers = new ArrayList<>();
 		for (int i = 0; i < ROWS; i++)
@@ -61,8 +34,8 @@ public class Grid {
 		}
 	}
 
-	private Number getRandom() {
-		Number random_number = new Number();
+	private Cell getRandom() {
+		Cell random_number = new Cell();
 		Random rnd = new Random();
 		if (rnd.nextInt(10) == 1){ // in 10% of the cases
 			random_number.setValue(4);
@@ -76,7 +49,7 @@ public class Grid {
 	public void initialise() {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
-				number[i][j] = new Number();
+				number[i][j] = new Cell();
 			}
 		}
 		addRandom();
@@ -95,8 +68,8 @@ public class Grid {
 	private void orderRow(int index) {
 		for (int a = 0; a < 4; a++) {
 			for (int i = 0; i < ROWS - 1; i++) {
-				Number current = number[index][i];
-				Number next = number[index][i + 1];
+				Cell current = number[index][i];
+				Cell next = number[index][i + 1];
 				if (current.getValue() != 0) {
 					if (next.getValue() == 0) {
 						next.setValue(current.getValue());
@@ -108,8 +81,8 @@ public class Grid {
 		}
 	}
 	
-	private Number[][] rotate(Number[][] original) {
-		Number[][] rotated = new Number[ROWS][COLUMNS];
+	private Cell[][] rotate(Cell[][] original) {
+		Cell[][] rotated = new Cell[ROWS][COLUMNS];
 		final int M = ROWS;
 		final int N = COLUMNS;
 		for (int r = 0; r < M; r++) {

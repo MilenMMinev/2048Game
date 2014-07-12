@@ -1,9 +1,9 @@
 package com.hackbulgaria.game;
 
-public class Number {
+public class Cell {
 	private int value;
 
-	Number() {
+	Cell() {
 		this.value = 0;
 	}
 

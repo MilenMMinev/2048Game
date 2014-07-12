@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		Grid g = new Grid();
-		g.run();
+		GameRunner gameRunner = new GameRunner();
+		gameRunner.run();
 		}
 	}
