@@ -1,6 +1,11 @@
 package com.hackbulgaria.game;
 
 public class Cell {
+	@Override
+	public String toString() {
+		return "Cell [value=" + value + "]";
+	}
+
 	private int value;
 
 	Cell() {

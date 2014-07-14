@@ -1,24 +1,23 @@
 package com.hackbulgaria.game;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Stack;
 
 public class ForwardAndBackward {
-	private final Queue<Grid> forWard = new PriorityQueue<>();
-	private final Stack<Grid> backWard = new Stack<>();
+	private static final Stack<Grid> redo = new Stack<>();
+	private static final Stack<Grid> undo = new Stack<>();
 
-	public Grid back() {
-		forWard.add(backWard.peek());
-		return backWard.pop();
+	public static Grid undo() {
+		redo.add(undo.peek());
+		return undo.pop();
 	}
 
-	public void ImportMove(Grid grid) {
-		backWard.push(grid);
+	// used when you use arrows and when you use forward
+	public static void saveMove(Grid grid) {
+		undo.push(grid);
 	}
 
-	public Grid forward() {
-		return forWard.poll();
+	public static Grid redo() {
+		return redo.pop();
 	}
 
 }

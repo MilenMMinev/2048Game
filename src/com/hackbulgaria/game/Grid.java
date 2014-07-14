@@ -5,30 +5,65 @@ import java.util.List;
 import java.util.Random;
 
 public class Grid {
+	@Override
+	public String toString() {
+		String string = "";
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLUMNS; j++) {
+				string += (number[i][j].getValue() + " ");
+			}
+			string += System.lineSeparator();
+		}
+		return string;
+	}
+
 	private final int ROWS = 4;
 	private final int COLUMNS = 4;
+	private boolean gameRun = true;
 
 	private Cell[][] number = new Cell[ROWS][COLUMNS];
 	
-	public Cell[][] getGridState(){
+	public Grid() {
+		this.initialise();
+	}
+
+	public boolean getGameRun() {
+		return this.gameRun;
+	}
+	public Cell[][] getGrid() {
 		return this.number;
+	}
+
+	@Override
+	public Grid clone() {
+		Grid grid = new Grid();
+		for (int i = 0; i < this.ROWS; i++) {
+			for (int j = 0; j < this.COLUMNS; j++) {
+				Cell cell = new Cell();
+				cell.setValue(this.number[i][j].getValue());
+				grid.number[i][j] = cell;
+			}
+		}
+		return grid;
 	}
 
 	public void addRandom() {
 		Random rnd = new Random();
-		List<Coordinates> free_squaers = new ArrayList<>();
+		List<Coordinates> freeSquares = new ArrayList<>();
 		for (int i = 0; i < ROWS; i++)
 			for(int j = 0; j < COLUMNS; j++)
 			if(number[i][j].getValue() == 0)
-				free_squaers.add(new Coordinates(i, j));
+				freeSquares.add(new Coordinates(i, j));
 				
 		
-		if (free_squaers.size() == 0)
-			System.out.println("Game Over"); // TO DO:
+		if (freeSquares.size() == 0) {
+			gameRun = false;
+		}
+		// System.out.println("Game Over"); // TO DO:
 			//game over
 		else{
-			int rnd_index = rnd.nextInt(free_squaers.size());  // Select random free square
-			Coordinates rnd_square = free_squaers.get(rnd_index); // Get the coordinates of this square
+			int rndIndex = rnd.nextInt(freeSquares.size());  // Select random free square
+			Coordinates rnd_square = freeSquares.get(rndIndex); // Get the coordinates of this square
 			number[rnd_square.getX()][rnd_square.getY()] = getRandom(); // set its value to either 2 or 4
 			
 		}
