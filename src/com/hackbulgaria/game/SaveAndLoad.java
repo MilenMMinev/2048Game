@@ -1,34 +1,36 @@
 package com.hackbulgaria.game;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class SaveAndLoad {
-	public void saveState(Grid grid) throws IOException {
-		// File file = new File("");
-		// FileWriter wasdas = new FileWriter(file);
-		// wasdas.w
-		// PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-		// writer.
-		// ObjectOutputStream object = new ObjectOutputStream();
-		// object.
-		FileOutputStream fout = new FileOutputStream("saveGame.ser");
-		ObjectOutputStream oos = new ObjectOutputStream(fout);
-		oos.writeObject(grid);
-		oos.close();
+	private final File file = new File("grid.ser");
+	public void save(Grid grid) throws FileNotFoundException, IOException {
+		file.createNewFile();
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+				file));
+		out.writeObject(grid);
+		out.flush();
+		out.close();
 	}
 
 	public Grid load() throws IOException, ClassNotFoundException {
-		Grid deserializedGrid;
-		FileInputStream inputFileStream = new FileInputStream("ser/emp.ser");
-		ObjectInputStream objectInputStream = new ObjectInputStream(
-				inputFileStream);
-		deserializedGrid = (Grid) objectInputStream.readObject();
-		objectInputStream.close();
-		inputFileStream.close();
+		Grid deserializedGrid = null;
+		@SuppressWarnings("resource")
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+		Object obj = in.readObject();
+		if (obj instanceof Grid) {
+			deserializedGrid = (Grid) obj;
+			System.out.println("Done!!!");
+		} else {
+			System.out.println("Not Done");
+		}
+		// deserializedGrid = (Grid) in.readObject();
 		return deserializedGrid;
 	}
 }

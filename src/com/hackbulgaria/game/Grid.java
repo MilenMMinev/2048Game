@@ -1,10 +1,16 @@
 package com.hackbulgaria.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Grid {
+public class Grid implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String toString() {
 		String string = "";
@@ -18,11 +24,11 @@ public class Grid {
 	}
 	
 
-	private final int ROWS = 4;
-	private final int COLUMNS = 4;
-	private boolean gameRun = true;
+	private transient final int ROWS = 4;
+	private transient final int COLUMNS = 4;
+	private transient boolean gameRun = true;
 
-	private Cell[][] cell = new Cell[ROWS][COLUMNS];
+	private transient Cell[][] cell = new Cell[ROWS][COLUMNS];
 	
 	
 	
