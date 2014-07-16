@@ -1,5 +1,7 @@
 package com.hackbulgaria.game;
 
+import java.awt.Point;
+
 public class Coordinates {
 	private int x;
 	private int y;
