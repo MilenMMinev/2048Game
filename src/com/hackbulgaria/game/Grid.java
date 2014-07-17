@@ -28,7 +28,7 @@ public class Grid implements Serializable {
 	private transient final int COLUMNS = 4;
 	private transient boolean gameRun = true;
 
-	private transient Cell[][] cell = new Cell[ROWS][COLUMNS];
+	private Cell[][] cell = new Cell[ROWS][COLUMNS];
 	
 	
 	
