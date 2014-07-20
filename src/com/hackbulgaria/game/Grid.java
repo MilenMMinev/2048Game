@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Grid implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -30,7 +27,24 @@ public class Grid implements Serializable {
 
 	private Cell[][] cell = new Cell[ROWS][COLUMNS];
 	
+	public boolean areDifferent(Grid other) {
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLUMNS; j++) {
+				if (this.cell[i][j].getValue() != other.cell[i][j].getValue()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
+	public int getCellValue(int i, int j){
+		return this.getCells()[i][j].getValue();
+	}
+
+	public Cell[][] getCells() {
+		return this.cell;
+	}
 	
 	public Grid() {
 		this.initialise();
