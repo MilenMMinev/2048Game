@@ -9,8 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class SaveAndLoad {
-	private final File file = new File("grid.ser");
-	public void save(Grid grid) throws FileNotFoundException, IOException {
+	private final static File file = new File("grid.ser");
+
+	public static void save(Grid grid) throws FileNotFoundException,
+			IOException {
 		file.createNewFile();
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
 				file));
@@ -19,7 +21,7 @@ public class SaveAndLoad {
 		out.close();
 	}
 
-	public Grid load() throws IOException, ClassNotFoundException {
+	public static Grid load() throws IOException, ClassNotFoundException {
 		Grid deserializedGrid = null;
 		@SuppressWarnings("resource")
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));

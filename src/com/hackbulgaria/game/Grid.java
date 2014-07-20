@@ -19,14 +19,12 @@ public class Grid implements Serializable {
 		}
 		return string;
 	}
-	
 
 	private transient final int ROWS = 4;
 	private transient final int COLUMNS = 4;
-	private transient boolean gameRun = true;
 
 	private Cell[][] cell = new Cell[ROWS][COLUMNS];
-	
+
 	public boolean areDifferent(Grid other) {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
@@ -37,22 +35,54 @@ public class Grid implements Serializable {
 		}
 		return false;
 	}
-	
-	public int getCellValue(int i, int j){
+
+	public int getCellValue(int i, int j) {
 		return this.getCells()[i][j].getValue();
 	}
 
 	public Cell[][] getCells() {
 		return this.cell;
 	}
-	
+
 	public Grid() {
 		this.initialise();
 	}
 
-	public boolean getGameRun() {
-		return this.gameRun;
+	public static boolean youWon(Grid grid) {
+		for (int row = 0; row < grid.ROWS; row++) {
+			for (int col = 0; col < grid.COLUMNS; col++) {
+				if (grid.cell[row][col].getValue() == 2048) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
+
+	public static boolean youLose(Grid grid) {// TODO:implement youLose
+		Grid cloneGridRight = grid.clone();
+		cloneGridRight.moveRight();
+		Grid cloneGridLeft = grid.clone();
+		cloneGridRight.moveLeft();
+		Grid cloneGridUp = grid.clone();
+		cloneGridRight.moveUp();
+		Grid cloneGridDown = grid.clone();
+		cloneGridRight.moveDown();
+		if (grid.areDifferent(cloneGridDown)) {
+			return false;
+		}
+		if (grid.areDifferent(cloneGridUp)) {
+			return false;
+		}
+		if (grid.areDifferent(cloneGridLeft)) {
+			return false;
+		}
+		if (grid.areDifferent(cloneGridRight)) {
+			return false;
+		}
+		return true;
+	}
+
 	public Cell[][] getGrid() {
 		return this.cell;
 	}
@@ -74,31 +104,27 @@ public class Grid implements Serializable {
 		Random rnd = new Random();
 		List<Coordinates> freeSquares = new ArrayList<>();
 		for (int i = 0; i < ROWS; i++)
-			for(int j = 0; j < COLUMNS; j++)
-			if(cell[i][j].getValue() == 0)
-				freeSquares.add(new Coordinates(i, j));
-				
-		
-		if (freeSquares.size() == 0) {
-			gameRun = false;
-		}
-		// System.out.println("Game Over"); // TO DO:
-			//game over
-		else{
-			int rndIndex = rnd.nextInt(freeSquares.size());  // Select random free square
-			Coordinates rnd_square = freeSquares.get(rndIndex); // Get the coordinates of this square
-			cell[rnd_square.getX()][rnd_square.getY()] = getRandom(); // set its value to either 2 or 4
-			
+			for (int j = 0; j < COLUMNS; j++)
+				if (cell[i][j].getValue() == 0)
+					freeSquares.add(new Coordinates(i, j));
+
+		if (freeSquares.size() != 0) {
+
+			int rndIndex = rnd.nextInt(freeSquares.size());
+			// Select random free square
+			Coordinates rnd_square = freeSquares.get(rndIndex);
+			// Get the coordinates of this square
+			cell[rnd_square.getX()][rnd_square.getY()] = getRandom();
+			// set its value to either 2 or 4
 		}
 	}
 
 	private Cell getRandom() {
 		Cell random_cell = new Cell();
 		Random rnd = new Random();
-		if (rnd.nextInt(10) == 1){ // in 10% of the cases
+		if (rnd.nextInt(10) == 1) { // in 10% of the cases
 			random_cell.setValue(4);
-		}
-		else{
+		} else {
 			random_cell.setValue(2);
 		}
 		return random_cell;
@@ -112,15 +138,6 @@ public class Grid implements Serializable {
 		}
 		addRandom();
 		addRandom();
-	}
-
-	public void print() { // TO DO: make it usable by Front End
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLUMNS; j++) {
-				System.out.print(cell[i][j].getValue() + " ");
-			}
-			System.out.println();
-		}
 	}
 
 	private void orderRow(int index) {
@@ -138,7 +155,7 @@ public class Grid implements Serializable {
 			}
 		}
 	}
-	
+
 	private Cell[][] rotate(Cell[][] original) {
 		Cell[][] rotated = new Cell[ROWS][COLUMNS];
 		final int M = ROWS;
@@ -151,7 +168,6 @@ public class Grid implements Serializable {
 		return rotated;
 	}
 
-
 	public void moveRight() {
 		for (int i = 0; i < ROWS; i++) {
 			orderRow(i);
@@ -161,10 +177,9 @@ public class Grid implements Serializable {
 					cell[i][j - 1].setValue(0);
 				}
 			}
-			// orderRow(i);
+			orderRow(i);
 		}
 	}
-
 
 	public void moveLeft() {
 		cell = rotate(cell);
@@ -191,7 +206,5 @@ public class Grid implements Serializable {
 		cell = rotate(cell);
 
 	}
-	
-	
 
 }
