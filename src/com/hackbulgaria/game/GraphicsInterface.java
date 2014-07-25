@@ -40,6 +40,7 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 	g2.setColor(Color.darkGray);
 	g2.setFont(new Font("Name", Font.BOLD, 50));
 		Image img = null;
+		// TODO: key enable sled you lost or you won do not allow to use keys
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 				if (Grid.youWon(grid)) {

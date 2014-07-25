@@ -68,16 +68,16 @@ public class Grid implements Serializable {
 		cloneGridRight.moveUp();
 		Grid cloneGridDown = grid.clone();
 		cloneGridRight.moveDown();
-		if (grid.areDifferent(cloneGridDown)) {
+		if (grid.areDifferent(cloneGridDown) && grid.feeSquares()) {
 			return false;
 		}
-		if (grid.areDifferent(cloneGridUp)) {
+		if (grid.areDifferent(cloneGridUp) && grid.feeSquares()) {
 			return false;
 		}
-		if (grid.areDifferent(cloneGridLeft)) {
+		if (grid.areDifferent(cloneGridLeft) && grid.feeSquares()) {
 			return false;
 		}
-		if (grid.areDifferent(cloneGridRight)) {
+		if (grid.areDifferent(cloneGridRight) && grid.feeSquares()) {
 			return false;
 		}
 		return true;
@@ -100,6 +100,18 @@ public class Grid implements Serializable {
 		return grid;
 	}
 
+	public boolean feeSquares() {
+		List<Coordinates> freeSquares = new ArrayList<>();
+		for (int i = 0; i < ROWS; i++)
+			for (int j = 0; j < COLUMNS; j++)
+				if (cell[i][j].getValue() == 0)
+					freeSquares.add(new Coordinates(i, j));
+		if (freeSquares.size() == 0) {
+			return false;
+		}
+		return true;
+
+	}
 	public void addRandom() {
 		Random rnd = new Random();
 		List<Coordinates> freeSquares = new ArrayList<>();
