@@ -18,31 +18,29 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class GraphicsInterface extends JPanel implements ActionListener, KeyListener{
-	
+public class GraphicsInterface extends JPanel implements ActionListener,
+		KeyListener {
+
 	Timer t = new Timer(50, this);
 	private Grid grid = new Grid();
 
-	
-	public GraphicsInterface(){
+	public GraphicsInterface() {
 		t.start();
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 	}
-	
 
-	
 	@Override
-	public void paintComponent(Graphics g){
-	super.paintComponent(g);
-	Graphics2D g2 = (Graphics2D) g;
-	g2.setColor(Color.darkGray);
-	g2.setFont(new Font("Name", Font.BOLD, 50));
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.darkGray);
+		g2.setFont(new Font("Name", Font.BOLD, 50));
 		Image img = null;
 		// TODO: key enable sled you lost or you won do not allow to use keys
 	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < 4; j++) {
 				if (Grid.youWon(grid)) {
 					g2.drawString("You Won", 250, 80);
 				}
@@ -50,9 +48,8 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 					g2.drawString("You Lose", 250, 80);
 				} else {
 					try {
-						img = ImageIO.read(new File(
-								"/home/rosen/git/2048Game/images/"
-										+ grid.getCellValue(j, i) + ".png"));
+						img = ImageIO.read(new File("images/"
+								+ grid.getCellValue(j, i) + ".png"));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -62,21 +59,21 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 				}
 				// g2.drawString(Integer.toString(grid.getCellValue(j, i)),
 				// i * 120 + 200, j * 120 + 200);
+			}
 		}
 	}
-	}
-	
+
 	@Override
-	public void actionPerformed(ActionEvent e){
+	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
-	
+
 	@Override
-	public void keyPressed(KeyEvent e){
+	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		
+
 		Grid before = grid.clone();
-		switch(code){
+		switch (code) {
 		case KeyEvent.VK_LEFT:
 			ForwardAndBackward.saveMove(grid.clone());
 			grid.moveLeft();
@@ -84,7 +81,7 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 				grid.addRandom();
 			}
 			break;
-			
+
 		case KeyEvent.VK_DOWN:
 			ForwardAndBackward.saveMove(grid.clone());
 			grid.moveDown();
@@ -92,7 +89,7 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 				grid.addRandom();
 			}
 			break;
-			
+
 		case KeyEvent.VK_RIGHT:
 			ForwardAndBackward.saveMove(grid.clone());
 			grid.moveRight();
@@ -100,7 +97,7 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 				grid.addRandom();
 			}
 			break;
-			
+
 		case KeyEvent.VK_UP:
 			ForwardAndBackward.saveMove(grid.clone());
 			grid.moveUp();
@@ -108,11 +105,11 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 				grid.addRandom();
 			}
 			break;
-			
+
 		case KeyEvent.VK_R:// r
 			grid = ForwardAndBackward.redo();
 			break;
-			
+
 		case KeyEvent.VK_Z:// z
 			grid = ForwardAndBackward.undo();
 		case KeyEvent.VK_S:// s
@@ -134,7 +131,7 @@ public class GraphicsInterface extends JPanel implements ActionListener, KeyList
 			}
 		default:
 		}
-		}
+	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
