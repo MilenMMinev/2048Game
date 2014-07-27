@@ -28,9 +28,8 @@ public class SaveAndLoad {
 		Object obj = in.readObject();
 		if (obj instanceof Grid) {
 			deserializedGrid = (Grid) obj;
-			System.out.println("Done!!!");
 		} else {
-			System.out.println("Not Done");
+			return null;
 		}
 		// deserializedGrid = (Grid) in.readObject();
 		return deserializedGrid;
